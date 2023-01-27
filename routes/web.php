@@ -16,3 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Get all products with productCategoryId 'ACCOMM' or 'ATTRACTION'
+Route::get('/products', function () {
+    // Get all products from API - https://atlas.atdw-online.com.au/api/atlas/products?key=123456789101112&cats=ACCOMM,ATTRACTION&out=json
+
+    // Send data to frontend
+
+    // Handle errors
+});
