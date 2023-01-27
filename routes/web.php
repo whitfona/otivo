@@ -21,14 +21,22 @@ Route::get('/', function () {
 // Get all products with productCategoryId 'ACCOMM' or 'ATTRACTION'
 Route::get('/products', function () {
     $API_KEY = env('ATDW_API_KEY');
-    $response = Http::get('https://atlas.atdw-online.com.au/api/atlas/products?key=' . $API_KEY . '&cats=ACCOMM,ATTRACTION&out=json');
 
-    if (!$response->successful()) {
-        $response->throw();
+    $client = new GuzzleHttp\Client();
+
+    $response = $client->request(
+        'GET',
+        'https://atlas.atdw-online.com.au/api/atlas/products?key=' . $API_KEY . '&cats=ACCOMM,ATTRACTION&out=json'
+    );
+
+    if (!$response->getBody()) {
+        return response('Error getting products', 500);
     }
 
-    // will the UTF-16LE encoding cause an error?
-    return response($response->body());
+    $content = $response->getBody()->getContents();
+    $data = json_decode(
+        mb_convert_encoding($content, 'UTF-8', 'UTF-16LE')
+    );
 
-    // Handle errors
+    return $data->products;
 });
