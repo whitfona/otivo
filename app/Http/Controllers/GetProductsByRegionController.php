@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-class GetProductsByRegion extends BaseController
+class GetProductsByRegionController extends BaseController
 {
     //Get all products within a specified region, takes in a region code as a parameter
     public function __invoke($regionCode)

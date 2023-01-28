@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\GetProductsByLocation;
-use App\Http\Controllers\GetProductsByRegion;
+use App\Http\Controllers\GetProductsByLocationController;
+use App\Http\Controllers\GetProductsByRegionController;
 use App\Http\Controllers\GetProductsController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,10 +24,10 @@ Route::get('/', function () {
 Route::get('/products', GetProductsController::class);
 
 //Get all products within a specified state, takes a state code as a parameter
-Route::get('/products/state/{state}', GetProductsByLocation::class);
+Route::get('/products/state/{state}', GetProductsByLocationController::class);
 
 //Get all products within a specified region, takes in a region code as a parameter
-Route::get('/products/region/{regionCode}', GetProductsByRegion::class);
+Route::get('/products/region/{regionCode}', GetProductsByRegionController::class);
 
 //Get all locations (states), returns the state id, name and state code
 Route::get('/locations', function() {
