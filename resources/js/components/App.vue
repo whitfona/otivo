@@ -5,11 +5,10 @@
             <div class="flex flex-col">
                 <label for="regions" class="pb-2 text-white text-xl font-light">Region</label>
 
-                <select class="px-1 py-2 text-sm" name="locations" id="regions">
-                    <option value="Sunshine Coast Region">Sunshine Coast Region</option>
-                    <option value="Mackay Region">Mackay Region</option>
-                    <option value="Gold Coast Region">Gold Coast Region</option>
-                    <option value="Far West">Far West</option>
+                <select class="px-1 py-2 text-sm" name="locations" id="regions" @change="onChangeRegion($event)">
+                    <option v-for="region in regions" :value="region.regionID">
+                        {{ region.name }}
+                    </option>
                 </select>
             </div>
             <div class="flex flex-col">
@@ -39,7 +38,9 @@ export default {
         return {
             products: [],
             locations: [],
-            location: ''
+            regions: [],
+            location: '',
+            region: '',
         }
     },
     methods: {
@@ -53,11 +54,24 @@ export default {
                 .then(response => this.locations = response.data)
                 .catch(error => console.log(error));
         },
+        getRegions() {
+            axios.get('/regions')
+                .then(response => this.regions = response.data)
+                .catch(error => console.log(error));
+        },
         onChangeLocation(event) {
             this.location = event.target.value
         },
+        onChangeRegion(event) {
+            this.region = event.target.value
+        },
         getProductsByLocation() {
             axios.get(`/products/state/${this.location}`)
+                .then(response => this.products = response.data)
+                .catch(error => console.log(error))
+        },
+        getProductsByRegion() {
+            axios.get(`/products/region/${this.region}`)
                 .then(response => this.products = response.data)
                 .catch(error => console.log(error))
         }
@@ -65,10 +79,14 @@ export default {
     mounted() {
         this.getProducts()
         this.getLocations()
+        this.getRegions()
     },
     watch: {
         location: function() {
             this.getProductsByLocation()
+        },
+        region: function() {
+            this.getProductsByRegion()
         }
     }
 }
