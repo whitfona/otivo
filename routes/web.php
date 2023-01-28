@@ -64,3 +64,11 @@ Route::get('/products/state/{state}', function($state) {
 
     return $data->products;
 });
+
+//Get all products within a specified region
+Route::get('/products/region/{region}', function() {
+    // Takes in a region code
+    // Get data from API using the region code
+    // Format data to return product listing for each region
+    // Handle errors
+});
