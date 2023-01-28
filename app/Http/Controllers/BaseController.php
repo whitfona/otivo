@@ -6,14 +6,14 @@ use GuzzleHttp\Client;
 
 class BaseController extends Controller
 {
-    public function getData($urlOptions)
+    public function getData($type, $urlOptions)
     {
         $client = new Client();
         $API_KEY = env('ATDW_API_KEY');
 
         $response = $client->request(
             'GET',
-            'https://atlas.atdw-online.com.au/api/atlas/products?key=' . $API_KEY . $urlOptions
+            'https://atlas.atdw-online.com.au/api/atlas/' . $type . '?key=' . $API_KEY . $urlOptions
         );
 
         if (!$response->getBody()) {
