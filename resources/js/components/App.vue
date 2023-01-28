@@ -1,11 +1,11 @@
 <template>
     <div class="p-4 max-w-[1200px] mx-auto">
-        <h1 class="text-center">Welcome!</h1>
-        <div class="px-2 py-4 mb-4 flex gap-8 bg-blue-600">
+        <div class="px-2 py-4 mb-4 sm:flex gap-8 bg-blue-600">
             <div class="flex flex-col">
                 <label for="regions" class="pb-2 text-white text-xl font-light">Region</label>
 
                 <select class="px-1 py-2 text-sm" name="locations" id="regions" @change="onChangeRegion($event)">
+                    <option value="-1" selected>All Regions</option>
                     <option v-for="region in regions" :value="region.regionID">
                         {{ region.name }}
                     </option>
@@ -15,12 +15,14 @@
                 <label for="locations" class="pb-2 text-white text-xl font-light">Location</label>
 
                 <select class="px-1 py-2 text-sm" name="locations" id="locations" @change="onChangeLocation($event)">
+                    <option value="-1" selected>All Locations</option>
                     <option v-for="location in locations" :value="location.Code">
                         {{ location.Name }}
                     </option>
                 </select>
             </div>
         </div>
+
         <div class="flex flex-wrap gap-6 justify-center">
             <div v-for="product in products">
                 <product :product="product" />
@@ -51,11 +53,15 @@ export default {
         },
         getLocations() {
             axios.get('/locations')
+                // This was sorted on the backend but is not showing sorted in the UI, I don't want to sort it again
+                // on the front end, not sure on the best approach of sorting on the backend or frontend
                 .then(response => this.locations = response.data)
                 .catch(error => console.log(error));
         },
         getRegions() {
             axios.get('/regions')
+                // This was sorted on the backend but is not showing sorted in the UI, I don't want to sort it again
+                // on the front end, not sure on the best approach of sorting on the backend or frontend
                 .then(response => this.regions = response.data)
                 .catch(error => console.log(error));
         },
@@ -83,10 +89,10 @@ export default {
     },
     watch: {
         location: function() {
-            this.getProductsByLocation()
+            this.location === '-1' ? this.getProducts() : this.getProductsByLocation()
         },
         region: function() {
-            this.getProductsByRegion()
+            this.region === '-1' ? this.getProducts() : this.getProductsByRegion()
         }
     }
 }
