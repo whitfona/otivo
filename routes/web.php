@@ -42,9 +42,26 @@ Route::get('/products', function () {
 });
 
 //Get all products within a specified state
-Route::get('/products/{state}', function() {
+Route::get('/state', function() {
+    $API_KEY = env('ATDW_API_KEY');
+    $state = 'NSW';
+
     // Takes in a state code
-    // Get data from API using the state code
-    // Format data to return product listing for each state
-    // Handle errors
+    $client = new GuzzleHttp\Client();
+
+    $response = $client->request(
+        'GET',
+        'https://atlas.atdw-online.com.au/api/atlas/products?key=' . $API_KEY . '&st=' . $state . '&out=json'
+    );
+
+    if (!$response->getBody()) {
+        return response('Error getting products', 500);
+    }
+
+    $content = $response->getBody()->getContents();
+    $data = json_decode(
+        mb_convert_encoding($content, 'UTF-8', 'UTF-16LE')
+    );
+
+    return $data->products;
 });
