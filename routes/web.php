@@ -109,7 +109,7 @@ Route::get('/locations', function() {
         mb_convert_encoding($content, 'UTF-8', 'UTF-16LE')
     );
 
-    return $data;
+    return collect($data)->sortBy('Name');
 });
 
 //Get all regions, returns the region id, and name
@@ -134,5 +134,5 @@ Route::get('/regions', function() {
 
     return collect($data)->map(function($region) {
         return ['regionID' => $region->RegionId, 'name' => $region->Name];
-    });
+    })->sortBy('name');
 });
