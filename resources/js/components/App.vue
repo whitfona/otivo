@@ -15,11 +15,11 @@
             <div class="flex flex-col">
                 <label for="locations" class="pb-2 text-white text-xl font-light">Location</label>
 
-                <select class="px-1 py-2 text-sm" name="locations" id="locations">
-                    <option value="Brisbane Area">Brisbane Area</option>
-                    <option value="Ipswich Area">Ipswich Area</option>
-                    <option value="Caboolture Area">Caboolture Area</option>
-                    <option value="Bundaberg Area">Bundaberg Area</option>
+                <select class="px-1 py-2 text-sm" name="locations" id="locations" @change="onChangeLocation($event)">
+                    <option value="ACT">Australian Capital Territory</option>
+                    <option value="NSW">New South Wales</option>
+                    <option value="NT">Northern Territory</option>
+                    <option value="Tas">Tasmania</option>
                 </select>
             </div>
         </div>
@@ -39,6 +39,7 @@ export default {
     data() {
         return {
             products: [],
+            location: ''
         }
     },
     methods: {
@@ -46,10 +47,23 @@ export default {
             axios.get('/products')
                 .then(response => this.products = response.data)
                 .catch(error => console.log(error));
+        },
+        onChangeLocation(event) {
+            this.location = event.target.value
+        },
+        getProductsByLocation() {
+            axios.get(`/products/state/${this.location}`)
+                .then(response => this.products = response.data)
+                .catch(error => console.log(error))
         }
     },
     mounted() {
         this.getProducts()
+    },
+    watch: {
+        location: function() {
+            this.getProductsByLocation()
+        }
     }
 }
 </script>
