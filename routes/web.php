@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,12 +42,10 @@ Route::get('/products', function () {
     return $data->products;
 });
 
-//Get all products within a specified state
-Route::get('/state', function() {
+//Get all products within a specified state, takes a state code as a parameter
+Route::get('/products/state/{state}', function($state) {
     $API_KEY = env('ATDW_API_KEY');
-    $state = 'NSW';
 
-    // Takes in a state code
     $client = new GuzzleHttp\Client();
 
     $response = $client->request(
