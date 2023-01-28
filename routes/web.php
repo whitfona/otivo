@@ -65,11 +65,10 @@ Route::get('/products/state/{state}', function($state) {
     return $data->products;
 });
 
-//Get all products within a specified region
-Route::get('/products/region', function() {
+//Get all products within a specified region, takes in a region code as a parameter
+Route::get('/products/region/{regionCode}', function($regionCode) {
     // Takes in a region code
     $API_KEY = env('ATDW_API_KEY');
-    $regionCode = 89000197;
 
     $client = new GuzzleHttp\Client();
 
