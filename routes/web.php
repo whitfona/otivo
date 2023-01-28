@@ -111,3 +111,28 @@ Route::get('/locations', function() {
 
     return $data;
 });
+
+//Get all regions, returns the region id, and name
+Route::get('/regions', function() {
+    $API_KEY = env('ATDW_API_KEY');
+
+    $client = new GuzzleHttp\Client();
+
+    $response = $client->request(
+        'GET',
+        'https://atlas.atdw-online.com.au/api/atlas/regions?key=' . $API_KEY . '&out=json'
+    );
+
+    if (!$response->getBody()) {
+        return response('Error getting products', 500);
+    }
+
+    $content = $response->getBody()->getContents();
+    $data = json_decode(
+        mb_convert_encoding($content, 'UTF-8', 'UTF-16LE')
+    );
+
+    return collect($data)->map(function($region) {
+        return ['regionID' => $region->RegionId, 'name' => $region->Name];
+    });
+});
