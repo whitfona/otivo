@@ -1,5 +1,5 @@
 <template>
-<!--  Image and product name are wrapped in a-tags, the other pages are not built out but they would like
+<!--  Image and product name are wrapped in a-tags, the other pages are not built out but they would link
   to pages showing the individual information for that product  -->
     <div class="max-w-[366px] rounded-lg shadow hover:shadow-lg overflow-hidden">
         <a href="#"><img class="w-full" :src=product.productImage alt="{{ product.productName }}"></a>
@@ -22,7 +22,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>

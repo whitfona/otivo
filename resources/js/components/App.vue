@@ -3,8 +3,7 @@
         <div class="px-2 py-4 mb-4 sm:flex gap-8 bg-blue-600">
             <div class="flex flex-col">
                 <label for="regions" class="pb-2 text-white text-xl font-light">Region</label>
-
-                <select class="px-1 py-2 text-sm" name="locations" id="regions" @change="onChangeRegion($event)">
+                <select class="px-1 py-2 text-sm" name="regions" id="regions" @change="onChangeRegion($event)">
                     <option value="-1" selected>All Regions</option>
                     <option v-for="region in regions" :value="region.regionID">
                         {{ region.name }}
@@ -13,7 +12,6 @@
             </div>
             <div class="flex flex-col">
                 <label for="locations" class="pb-2 text-white text-xl font-light">Location</label>
-
                 <select class="px-1 py-2 text-sm" name="locations" id="locations" @change="onChangeLocation($event)">
                     <option value="-1" selected>All Locations</option>
                     <option v-for="location in locations" :value="location.Code">
@@ -97,7 +95,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>
