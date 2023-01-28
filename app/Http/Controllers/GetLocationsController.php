@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Collection;
+
 class GetLocationsController extends BaseController
 {
-    //Get all locations (states), returns the state id, name and state code
-    public function __invoke()
+    /**
+     * @return Collection all locations (states)
+     */
+    public function __invoke(): Collection
     {
 
         $locations = $this->getData('states', '&out=json');

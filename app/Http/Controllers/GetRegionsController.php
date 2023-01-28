@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Collection;
+
 class GetRegionsController extends BaseController
 {
-    //Get all regions, returns the region id, and name
-    public function __invoke()
+    /**
+     * @return Collection all regions
+     */
+    public function __invoke(): Collection
     {
         $regions = $this->getData('regions', '&out=json');
 

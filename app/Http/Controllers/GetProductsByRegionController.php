@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 class GetProductsByRegionController extends BaseController
 {
-    //Get all products within a specified region, takes in a region code as a parameter
-    public function __invoke($regionCode)
+    /**
+     * @param $regionCode int region code
+     * @return array all products within the specified region
+     */
+    public function __invoke(int $regionCode): array
     {
 
         return $this->getData('products', '&servicerg=' . $regionCode . '&out=json')->products;
