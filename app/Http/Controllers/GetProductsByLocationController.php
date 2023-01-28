@@ -8,6 +8,6 @@ class GetProductsByLocationController extends BaseController
     public function __invoke($state)
     {
 
-        return $this->getData('&st=' . $state . '&out=json')->products;
+        return $this->getData('products', '&st=' . $state . '&out=json')->products;
     }
 }

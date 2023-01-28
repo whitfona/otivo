@@ -8,6 +8,6 @@ class GetProductsByRegionController extends BaseController
     public function __invoke($regionCode)
     {
 
-        return $this->getData('&servicerg=' . $regionCode . '&out=json')->products;
+        return $this->getData('products', '&servicerg=' . $regionCode . '&out=json')->products;
     }
 }
