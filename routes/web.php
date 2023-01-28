@@ -4,6 +4,7 @@ use App\Http\Controllers\GetLocationsController;
 use App\Http\Controllers\GetProductsByLocationController;
 use App\Http\Controllers\GetProductsByRegionController;
 use App\Http\Controllers\GetProductsController;
+use App\Http\Controllers\GetRegionsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,26 +35,5 @@ Route::get('/products/region/{regionCode}', GetProductsByRegionController::class
 Route::get('/locations', GetLocationsController::class);
 
 //Get all regions, returns the region id, and name
-Route::get('/regions', function() {
-    $API_KEY = env('ATDW_API_KEY');
+Route::get('/regions', GetRegionsController::class);
 
-    $client = new GuzzleHttp\Client();
-
-    $response = $client->request(
-        'GET',
-        'https://atlas.atdw-online.com.au/api/atlas/regions?key=' . $API_KEY . '&out=json'
-    );
-
-    if (!$response->getBody()) {
-        return response('Error getting products', 500);
-    }
-
-    $content = $response->getBody()->getContents();
-    $data = json_decode(
-        mb_convert_encoding($content, 'UTF-8', 'UTF-16LE')
-    );
-
-    return collect($data)->map(function($region) {
-        return ['regionID' => $region->RegionId, 'name' => $region->Name];
-    })->sortBy('name');
-});
