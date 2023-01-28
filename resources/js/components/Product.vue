@@ -5,7 +5,7 @@
         <a href="#"><img class="w-full" :src=product.productImage alt="{{ product.productName }}"></a>
         <div class="py-8 px-4">
             <a href="#"><h2 class="font-semibold text-lg pb-4">{{ product.productName }}</h2></a>
-            <p class="line-clamp-4 font-light text-sm">{{ product.productDescription }}</p>
+            <p class="line-clamp-3 font-light text-sm">{{ product.productDescription }}</p>
         </div>
     </div>
 </template>
