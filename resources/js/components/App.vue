@@ -16,10 +16,9 @@
                 <label for="locations" class="pb-2 text-white text-xl font-light">Location</label>
 
                 <select class="px-1 py-2 text-sm" name="locations" id="locations" @change="onChangeLocation($event)">
-                    <option value="ACT">Australian Capital Territory</option>
-                    <option value="NSW">New South Wales</option>
-                    <option value="NT">Northern Territory</option>
-                    <option value="Tas">Tasmania</option>
+                    <option v-for="location in locations" :value="location.Code">
+                        {{ location.Name }}
+                    </option>
                 </select>
             </div>
         </div>
@@ -39,6 +38,7 @@ export default {
     data() {
         return {
             products: [],
+            locations: [],
             location: ''
         }
     },
@@ -46,6 +46,11 @@ export default {
         getProducts() {
             axios.get('/products')
                 .then(response => this.products = response.data)
+                .catch(error => console.log(error));
+        },
+        getLocations() {
+            axios.get('/locations')
+                .then(response => this.locations = response.data)
                 .catch(error => console.log(error));
         },
         onChangeLocation(event) {
@@ -59,6 +64,7 @@ export default {
     },
     mounted() {
         this.getProducts()
+        this.getLocations()
     },
     watch: {
         location: function() {
