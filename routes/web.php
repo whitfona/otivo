@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +21,7 @@ Route::get('/', function () {
 Route::get('/products', function () {
     $API_KEY = env('ATDW_API_KEY');
 
+    // How is using Guzzle like this different from using the HTTP facade?
     $client = new GuzzleHttp\Client();
 
     $response = $client->request(
@@ -39,4 +39,12 @@ Route::get('/products', function () {
     );
 
     return $data->products;
+});
+
+//Get all products within a specified state
+Route::get('/products/{state}', function() {
+    // Takes in a state code
+    // Get data from API using the state code
+    // Format data to return product listing for each state
+    // Handle errors
 });
