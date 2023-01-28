@@ -1,6 +1,12 @@
 <template>
-    <h1 class="text-center">Welcome!</h1>
-    {{products}}
+    <div class="p-4">
+        <h1 class="text-center">Welcome!</h1>
+        <div class="flex flex-wrap gap-6 justify-center">
+            <div v-for="product in products">
+                <product :product="product" />
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
