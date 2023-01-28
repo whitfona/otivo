@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GetProductsByLocation;
 use App\Http\Controllers\GetProductsController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,27 +23,7 @@ Route::get('/', function () {
 Route::get('/products', GetProductsController::class);
 
 //Get all products within a specified state, takes a state code as a parameter
-Route::get('/products/state/{state}', function($state) {
-    $API_KEY = env('ATDW_API_KEY');
-
-    $client = new GuzzleHttp\Client();
-
-    $response = $client->request(
-        'GET',
-        'https://atlas.atdw-online.com.au/api/atlas/products?key=' . $API_KEY . '&st=' . $state . '&out=json'
-    );
-
-    if (!$response->getBody()) {
-        return response('Error getting products', 500);
-    }
-
-    $content = $response->getBody()->getContents();
-    $data = json_decode(
-        mb_convert_encoding($content, 'UTF-8', 'UTF-16LE')
-    );
-
-    return $data->products;
-});
+Route::get('/products/state/{state}', GetProductsByLocation::class);
 
 //Get all products within a specified region, takes in a region code as a parameter
 Route::get('/products/region/{regionCode}', function($regionCode) {
