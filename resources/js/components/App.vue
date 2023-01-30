@@ -1,8 +1,5 @@
 <template>
-    <div v-if="isLoading">
-        <h1 class="text-center text-xl pt-6">Loading...</h1>
-    </div>
-    <div v-else class="p-4 max-w-[1200px] mx-auto">
+    <div class="p-4 max-w-[1200px] mx-auto">
         <div class="px-2 py-4 mb-4 sm:flex gap-8 bg-blue-600">
             <div class="flex flex-col">
                 <label for="regions" class="pb-2 text-white text-xl font-light">Region</label>
@@ -24,7 +21,10 @@
             </div>
         </div>
 
-        <div class="flex flex-wrap gap-6 justify-center">
+        <div v-if="isLoading">
+            <h1 class="text-center text-xl pt-6">Loading...</h1>
+        </div>
+        <div v-else class="flex flex-wrap gap-6 justify-center">
             <div v-for="product in products">
                 <product :product="product" />
             </div>
@@ -77,13 +77,21 @@ export default {
             this.region = event.target.value
         },
         getProductsByLocation() {
+            this.isLoading = true
             axios.get(`/products/state/${this.location}`)
-                .then(response => this.products = response.data)
+                .then(response => {
+                    this.products = response.data
+                    this.isLoading = false
+                })
                 .catch(error => console.log(error))
         },
         getProductsByRegion() {
+            this.isLoading = true
             axios.get(`/products/region/${this.region}`)
-                .then(response => this.products = response.data)
+                .then(response => {
+                    this.products = response.data
+                    this.isLoading = false
+                })
                 .catch(error => console.log(error))
         }
     },
