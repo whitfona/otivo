@@ -1,5 +1,8 @@
 <template>
-    <div class="p-4 max-w-[1200px] mx-auto">
+    <div v-if="isLoading">
+        <h1 class="text-center text-xl pt-6">Loading...</h1>
+    </div>
+    <div v-else class="p-4 max-w-[1200px] mx-auto">
         <div class="px-2 py-4 mb-4 sm:flex gap-8 bg-blue-600">
             <div class="flex flex-col">
                 <label for="regions" class="pb-2 text-white text-xl font-light">Region</label>
@@ -41,12 +44,16 @@ export default {
             regions: [],
             location: '',
             region: '',
+            isLoading: true
         }
     },
     methods: {
         getProducts() {
             axios.get('/products')
-                .then(response => this.products = response.data)
+                .then(response => {
+                    this.products = response.data
+                    this.isLoading = false
+                })
                 .catch(error => console.log(error));
         },
         getLocations() {
